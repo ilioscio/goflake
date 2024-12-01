@@ -10,7 +10,6 @@
     in
     {
       packages = forAllSystems (system:
-        let
           pkgs = nixpkgs.legacyPackages.${system};
 
           arguments = {
@@ -27,17 +26,12 @@
               '';
             };
           };
-  
-        in
-        {
-          default = arguments;
-        }
       );
 
       apps = forAllSystems (system: {
         arguments = {
           type = "app";
-          program = "${self.packages.${system}.arguments}/bin/arguments";
+          arguments = "${self.packages.${system}.arguments}/bin/arguments";
         };
         default = self.apps.${system}.arguments;
       });
